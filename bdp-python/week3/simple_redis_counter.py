@@ -49,11 +49,41 @@ def do_work(redis_url, redis_counter_name, file_name):
             # increment Redis counter by 1
             redis_client.incr(redis_counter_name)
 
+            hour = extract_hour(event.timestamp)
+
+            # Query 1 Hash map implementation:
+            # hash map name = timestamp up to the hour portion, e.g. 2022-09-03:16
+            # hash map key  = 'url'
+            # hash map value for the 'url' key: Number of visits
+            # The command increments the counter of visited urls per hour per url
+            # redis usage example: hlen 2022-09-03:16
+            redis_client.hincrby(hour, event.url, 1)
+
+            # Query 2 Hash map implementation:
+            # hash map name = timestamp up to the hour portion plus the url, separated by |q2|, e.g. 2022-09-03:16|q2|http://example.com/?url=065
+            # hash map keys  = userid
+            # hash map values for the userid keys: Number of visits
+            # The command increments the counter of unique visitors per hour per url
+            # redis usage example: hlen 2022-09-03:16|q2|http://example.com/?url=065
+            redis_client.hincrby(hour + '|q2|' + event.url, event.userid, 1)
+
+            # Query 3 Hash map implementation:
+            # hash map name = timestamp up to the hour portion plus the url, separated by |q3|, e.g. 2022-09-03:16|q3|http://example.com/?url=065
+            # hash map key  = clicks
+            # hash map value for the 'click' key: Number of clicks
+            # The command increments the counter of clicks per hour per url
+            # redis usage example: hget 2022-09-03:16|q3|http://example.com/?url=065 clicks
+            redis_client.hincrby(hour + '|q3|' + event.url, 'clicks', 1)
+
         shared_counter = redis_client.get(redis_counter_name)
         print(f"processing of {file_name} has finished processing with local event_count={event_count}, "
               f"shared counter from Redis: {shared_counter}")
 
     redis_client.close()
+
+def extract_hour(input):
+    '''Given an input such as 2022-09-03T16:07:05.623049600Z returns the date plus the hour portion, e.g. 2022-09-03:16'''
+    return input.split(':')[0].replace('T', ':')
 
 
 def parse_line(line):
