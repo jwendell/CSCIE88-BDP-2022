@@ -75,6 +75,13 @@ def do_work(redis_url, redis_counter_name, file_name):
             # redis usage example: hget 2022-09-03:16|q3|http://example.com/?url=065 clicks
             redis_client.hincrby(hour + '|q3|' + event.url, 'clicks', 1)
 
+            # Problem 2, Query 4
+            # First, store the list of countries by hour in a set, so that it can be iterated later
+            # Then, create a hashmap named after the hour+country code, containing all urls as keys.
+            # The size of the hashmap tells the number of unique urls
+            redis_client.sadd('COUNTRY-' + hour, event.country)
+            redis_client.hincrby('COUNTRY-' + hour + '-' + event.country, event.url, 1)
+
         shared_counter = redis_client.get(redis_counter_name)
         print(f"processing of {file_name} has finished processing with local event_count={event_count}, "
               f"shared counter from Redis: {shared_counter}")
