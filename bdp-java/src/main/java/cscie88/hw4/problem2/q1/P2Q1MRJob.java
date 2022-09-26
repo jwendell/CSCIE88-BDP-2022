@@ -18,13 +18,17 @@ public class P2Q1MRJob {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length < 2) {
-			System.out.println("Usage: java P2Q1MRJob <input_dir> <output_dir>");
+			System.out.println("Usage: java P2Q1MRJob <input_dir> <output_dir> [number-of-reducer-jobs]");
 			System.exit(-1);
 		}
 		// create a new MR job
 		Configuration conf = new Configuration();
 	    Job job = Job.getInstance(conf, "Count unique URL's per hour");
-	    
+
+		if (args.length > 2) {
+			job.setNumReduceTasks(Integer.valueOf(args[2]));
+		}
+
 	    //This class is used as reference point to locate the jar file
 	    job.setJarByClass(P2Q1MRJob.class);
 	    
