@@ -1,13 +1,19 @@
 from kafka import KafkaProducer
+import datetime
 import time
-import random
+import uuid
 
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer = KafkaProducer(bootstrap_servers=['localhost:9092', 'localhost:9093', 'localhost:9094'])
 
-var = 1
-while var == 1 :
-    num = random.randint(0,10)
-    print(str(num))
-#    producer.send('python_test_topic' ,value=str(num), key=str(num) )
-    producer.send('python_test_topic', value=b'msg %d' % num, key=b'msg %d' % num )
+userId = "Jonh_Santana"
+topic = "problem3"
+
+while True:
+    uid = uuid.uuid4()
+    now = datetime.datetime.now()
+    message = bytes(f"{uid},{now},{userId}", 'utf-8')
+
+    print(f'Sending message {message}')
+    producer.send(topic ,value=message, key=message)
+
     time.sleep(1)
