@@ -1,0 +1,12 @@
+[Mon Oct 17 20:54:18.601728 2022] [suexec:notice] [pid 1:tid 1] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.3. Set the 'ServerName' directive globally to suppress this message
+[Mon Oct 17 20:54:18.608933 2022] [lbmethod_heartbeat:notice] [pid 1:tid 1] AH02282: No slotmem from mod_heartmonitor
+[Mon Oct 17 20:54:18.610575 2022] [mpm_event:notice] [pid 1:tid 1] AH00489: Apache/2.4.54 (Fedora Linux) configured -- resuming normal operations
+[Mon Oct 17 20:54:18.610590 2022] [core:notice] [pid 1:tid 1] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Mon Oct 17 20:55:01.395814 2022] [mpm_event:notice] [pid 1:tid 1] AH00492: caught SIGWINCH, shutting down gracefully
+[Mon Oct 17 21:04:46.393887 2022] [suexec:notice] [pid 1:tid 1] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.3. Set the 'ServerName' directive globally to suppress this message
+[Mon Oct 17 21:04:46.400705 2022] [lbmethod_heartbeat:notice] [pid 1:tid 1] AH02282: No slotmem from mod_heartmonitor
+[Mon Oct 17 21:04:46.402676 2022] [mpm_event:notice] [pid 1:tid 1] AH00489: Apache/2.4.54 (Fedora Linux) configured -- resuming normal operations
+[Mon Oct 17 21:04:46.402693 2022] [core:notice] [pid 1:tid 1] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Mon Oct 17 21:09:03.977203 2022] [mpm_event:notice] [pid 1:tid 1] AH00492: caught SIGWINCH, shutting down gracefully

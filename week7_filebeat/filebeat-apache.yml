@@ -1,0 +1,26 @@
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+
+- type: filestream
+  id: problem4-2
+  enabled: true
+  paths:
+    - /apache-logs/*
+
+# ============================== File output ==============================
+
+output.file:
+  enabled: true
+  path: /problem4/output
+  filename: Santana_Jonh_output
+  rotate_every_kb: 50
+  number_of_files: 5
+
+# ================================= Processors =================================
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
